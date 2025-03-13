@@ -2,6 +2,7 @@ using BiblioMundiApi.Conexao;
 using BiblioMundiApi.Data.Conexao;
 using BiblioMundiApi.Interfaces.Repositorio;
 using BiblioMundiApi.Repositorios.Cargos;
+using BiblioMundiApi.Repositorios.Funcionarios;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +23,7 @@ builder.Services.AddScoped<IConexaoBd>(provedorServ =>
 });
 builder.Services.AddScoped(c => new ConexaoBd(builder.Configuration.GetConnectionString("Conection")));
 builder.Services.AddScoped<ICargosRepositorio,CargosRepositorio>();
+builder.Services.AddScoped<IFuncionariosRepositorio,FuncionariosRepositorio>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

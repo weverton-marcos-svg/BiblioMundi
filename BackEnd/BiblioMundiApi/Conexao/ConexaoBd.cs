@@ -1,5 +1,4 @@
 ﻿using BiblioMundiApi.Data.Conexao;
-using BiblioMundiApi.Data.Entidades;
 using BiblioMundiApi.Interfaces.Padrao;
 using Microsoft.EntityFrameworkCore;
 

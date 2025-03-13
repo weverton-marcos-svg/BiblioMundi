@@ -1,6 +1,4 @@
-﻿using BiblioMundiApi.Data.Entidades;
-
-namespace BiblioMundiApi.Data.Conexao
+﻿namespace BiblioMundiApi.Data.Conexao
 {
     public class IConexaoBd
     {

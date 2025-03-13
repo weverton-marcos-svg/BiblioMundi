@@ -20,7 +20,7 @@ namespace BiblioMundiApi.Repositorios.Cargos
 
         public async Task<List<CargosListarTodosComandoSaida>> ListarTodos(PadraoComandoEntrada filtros)
         {
-            var listagem = _conexaoSql.cargo.AsNoTracking();
+            var listagem = _conexaoSql.Cargo.AsNoTracking();
 
             if (!string.IsNullOrWhiteSpace(filtros.Descricao))
             {
@@ -52,7 +52,7 @@ namespace BiblioMundiApi.Repositorios.Cargos
                 throw new Exception("Não foi informado o Id do cargo para busca.");
             }
 
-            var registro = await _conexaoSql.cargo
+            var registro = await _conexaoSql.Cargo
                             .AsNoTracking()
                             .Where(x => x.Id == id)
                             .Select(x => new PadraoConsultaComandoSaida()

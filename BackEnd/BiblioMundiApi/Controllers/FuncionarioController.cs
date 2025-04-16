@@ -30,7 +30,7 @@ namespace BiblioMundiApi.Controllers
             return await _funcionariosRepositorio.ListarTodos(filtros);
         }
 
-        [HttpGet("Id")]
+        [HttpGet("{Id}")]
         public async Task<ActionResult<FuncionariosLocalizarPorIdComandoSaida>> LocalizarPorID (int Id)
         {
             return await _funcionariosRepositorio.LocalizarPorId(Id);
@@ -42,7 +42,7 @@ namespace BiblioMundiApi.Controllers
             return await _funcionarioManipulador.Incluir(parametros);
         }
 
-        [HttpPut("Id")]
+        [HttpPut("{Id}")]
         public async Task<ActionResult> Alterar(int id, FuncionariosCadastroComandoEntrada parametros)
         {
             await _funcionarioManipulador.Alterar(id, parametros);

@@ -40,12 +40,12 @@ namespace BiblioMundiApi.Repositorios.Funcionarios
 
             if (!string.IsNullOrEmpty(filtros.Nome))
             {
-                consulta = consulta.Where(x => x.Nome.Trim().ToUpper() == filtros.Nome);
+                consulta = consulta.Where(x => x.Nome.Trim().ToUpper() == filtros.Nome.Trim().ToUpper());
             }
 
             if (!string.IsNullOrEmpty(filtros.Email))
             {
-                consulta = consulta.Where(x => x.Email.Trim().ToUpper() == filtros.Email);
+                consulta = consulta.Where(x => x.Email.Trim().ToUpper() == filtros.Email.Trim().ToUpper());
             }
 
             var listagem = await consulta
@@ -55,7 +55,12 @@ namespace BiblioMundiApi.Repositorios.Funcionarios
                                Nome = x.Nome,
                                DataAdmissao = x.DataAdmissao,
                                Email = x.Email,
-                               Inativo = x.Inativo
+                               Inativo = x.Inativo,
+                               Cargo = new()
+                               {
+                                   Id = x.CargoEntidade.Id,
+                                   Descricao = x.CargoEntidade.Descricao.Trim()
+                               }
                            })
                            .OrderBy(x => x.Nome)
                            .ToListAsync();
@@ -81,7 +86,12 @@ namespace BiblioMundiApi.Repositorios.Funcionarios
                              Email = x.Email,
                              Inativo = x.Inativo,
                              DataInclusao = x.DataInclusao,
-                             DataAlteracao = x.DataAlteracao
+                             DataAlteracao = x.DataAlteracao,
+                             Cargo = new()
+                             {
+                                 Id = x.CargoEntidade.Id,
+                                 Descricao = x.CargoEntidade.Descricao.Trim()
+                             }
                              
                          })
                          .FirstOrDefaultAsync();

@@ -52,6 +52,20 @@ namespace BiblioMundiApi.Manipulador
             await _funcionarioRepositorio.Salvar();
         }
 
+        public async Task<StatusLogicaPadraoComandoSaida> AlterarStatusLogico(int id)
+        {
+            var funcionario = await _funcionarioRepositorio.LocalizarEntidadePorId(id);
+
+            funcionario.Inativo = !funcionario.Inativo;
+
+            await _funcionarioRepositorio.Salvar();
+
+            return new StatusLogicaPadraoComandoSaida()
+            {
+                Inativo = funcionario.Inativo
+            };
+        }
+
         #region Metodos Privados
         private async Task Validacao(FuncionariosCadastroComandoEntrada registroCadastro, int Id)
         {
@@ -59,17 +73,17 @@ namespace BiblioMundiApi.Manipulador
 
             if (registro is not null && registro?.Id != Id )
             {
-                throw new Exception($"Não é possivel cadastrar o email {registroCadastro.Email} pois ele já está sendo utilizado no usuário de id {registro.Id}");
+                throw new Exception($"Não é possivel cadastrar o email {registroCadastro.Email} pois ele já está sendo utilizado no usuário de id {Id}");
             }
 
-            var registroCargo = await _cargosRepositorio.LocalizarPorId(registroCadastro.IdCargo);
+            var Cargo = await _cargosRepositorio.LocalizarPorId(registroCadastro.IdCargo);
 
-            if (registroCadastro is null)
+            if (Cargo is null)
             {
                 throw new Exception($"Cargo de id {registroCadastro.IdCargo} não existe.");
             }
 
-            if (registroCargo.Inativo)
+            if (Cargo.Inativo)
             {
                 throw new Exception($"Cargo de id {registroCadastro.IdCargo} foi está desativado no sistema.");
             }

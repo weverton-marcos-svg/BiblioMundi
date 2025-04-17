@@ -105,9 +105,29 @@ namespace BiblioMundiApi.Repositorios.Funcionarios
         }
         public async Task<FuncionariosEntidade> LocalizarPorEmail(string email)
         {
-            return await _conexaoSql.Funcionarios
+            var funcionario = await _conexaoSql.Funcionarios
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Email.Trim().ToUpper() == email.Trim().ToUpper());
+            
+            if (funcionario is null)
+            {
+                throw new Exception($"Nenhum funcionário com email {email} encontrado.");
+            }
+
+            return funcionario;
+
+        }
+
+        public async Task<FuncionariosEntidade> LocalizarEntidadePorId(int id)
+        {
+            var funcionario  = await _conexaoSql.Funcionarios.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (funcionario is null)
+            {
+                throw new Exception($"Nenhum funcionário com id {id} encontrado.");
+            }
+
+            return funcionario;
         }
     }
 }

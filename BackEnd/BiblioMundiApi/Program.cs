@@ -4,6 +4,7 @@ using BiblioMundiApi.Interfaces.Repositorio;
 using BiblioMundiApi.Repositorios.Cargos;
 using BiblioMundiApi.Repositorios.Funcionarios;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -21,6 +22,17 @@ builder.Services.AddScoped<IConexaoBd>(provedorServ =>
 {
     return provedorServ.GetService<ConexaoBd>();
 });
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("PermitirQualquerOrigem", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 builder.Services.AddScoped(c => new ConexaoBd(builder.Configuration.GetConnectionString("Conection")));
 builder.Services.AddScoped<ICargosRepositorio,CargosRepositorio>();
 builder.Services.AddScoped<IFuncionariosRepositorio,FuncionariosRepositorio>();
@@ -36,6 +48,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+app.UseCors("PermitirQualquerOrigem");
 
 app.MapControllers();
 

@@ -2,7 +2,6 @@
 using BiblioMundiApi.Comando.Padrao;
 using BiblioMundiApi.Interfaces.Repositorio;
 using BiblioMundiApi.Manipulador;
-using BiblioMundiApi.Repositorios.Cargos;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -30,10 +29,10 @@ namespace BiblioMundiApi.Controllers
             return await _funcionariosRepositorio.ListarTodos(filtros);
         }
 
-        [HttpGet("{Id}")]
-        public async Task<ActionResult<FuncionariosLocalizarPorIdComandoSaida>> LocalizarPorID (int Id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<FuncionariosLocalizarPorIdComandoSaida>> LocalizarPorID (int id)
         {
-            return await _funcionariosRepositorio.LocalizarPorId(Id);
+            return await _funcionariosRepositorio.LocalizarPorId(id);
         }
 
         [HttpPost]
@@ -42,12 +41,18 @@ namespace BiblioMundiApi.Controllers
             return await _funcionarioManipulador.Incluir(parametros);
         }
 
-        [HttpPut("{Id}")]
+        [HttpPut("{id}")]
         public async Task<ActionResult> Alterar(int id, FuncionariosCadastroComandoEntrada parametros)
         {
             await _funcionarioManipulador.Alterar(id, parametros);
             return Ok();
 
+        }
+
+        [HttpPut("{id}/StatusLogico")]
+        public async Task<StatusLogicaPadraoComandoSaida> Statuslogico(int id)
+        {
+            return await _funcionarioManipulador.AlterarStatusLogico(id);
         }
     }
 }

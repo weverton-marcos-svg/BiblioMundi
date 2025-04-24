@@ -69,7 +69,7 @@ namespace BiblioMundiApi.Manipulador
         #region Metodos Privados
         private async Task Validacao(FuncionariosCadastroComandoEntrada registroCadastro, int Id)
         {
-            var registro = await _funcionarioRepositorio.LocalizarPorEmail(registroCadastro.Email);
+            var registro = await _funcionarioRepositorio.LocalizarEntidadePorEmail(registroCadastro.Email);
 
             if (registro is not null && registro?.Id != Id )
             {

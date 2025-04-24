@@ -6,6 +6,7 @@ import FiltroLateral from "../../../components/FiltroLatereal";
 import CampoBuscaTexto from "../../../components/Inputs/CampoBuscaTexto";
 import CampoBuscaData from "../../../components/Inputs/CampoBuscaData"
 import DataTable from "../../../components/ModeloTabela";
+import ModalConfirmacao from "../../../components/Modal"
 import { FaFilter,FaFilterCircleDollar,FaFilterCircleXmark } from "react-icons/fa6";
 import { LuPencil,LuEyeOff  } from "react-icons/lu";
 import { RiRefreshFill } from "react-icons/ri";
@@ -19,6 +20,10 @@ export default function PageFuncionariosHome(){
     const [cargoFiltro, setCargoFiltro] = useState('');
     const [dataAdmissaoInicial, setDataAdmissaoInicial] = useState('');
     const [dataAdmissaoFinal, setDataAdmissaoFinal] = useState('');
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [funcionarioIdParaInativar, setFuncionarioIdParaInativar] = useState(null);
+    const [mensagemModal, setMensagemModal] = useState('');
+    const navigate = useNavigate();
 
     const fetchFuncionarios = async (filtros = {}) => {
         let url = 'https://localhost:5000/api/Funcionario';
@@ -35,7 +40,16 @@ export default function PageFuncionariosHome(){
             throw new Error(`HTTP error! status: ${response.status}`);
           }
           const data = await response.json();
-          setFuncionarios(data);
+          const listagemFuncionario = data.map(funcionarioAPI => ({
+            id: funcionarioAPI.id || null,
+            nome: funcionarioAPI.nome || '',
+            email: funcionarioAPI.email || '',
+            Inativo: funcionarioAPI.inativo || false,
+            cargo: funcionarioAPI.cargo.descricao || '',
+            dataAdmissao: funcionarioAPI.dataAdmissao || null,
+            Inativo: funcionarioAPI.inativo || false,
+          }));
+          setFuncionarios(listagemFuncionario);
         } catch (error) {
           console.error("Erro ao buscar dados da API:", error);
           // Lógica para lidar com o erro (exibir mensagem para o usuário, etc.)
@@ -69,7 +83,47 @@ export default function PageFuncionariosHome(){
     
         fetchFuncionarios(); 
         setFiltroVisivel(false);
-      };
+    };
+
+    const handleVisualizarClick = (funcionario) => {
+        setFuncionarioIdParaInativar(funcionario.id);
+        setMensagemModal(`Deseja realmente inativar/ativar o funcionário de id: ${funcionario.id} - ${funcionario.nome}?`);
+        setIsModalVisible(true);
+    };
+
+    const handleConfirmarInativacao = async () => {
+        setIsModalVisible(false);
+        if (funcionarioIdParaInativar) {
+          try {
+            const response = await fetch(`https://localhost:5000/api/Funcionario/${funcionarioIdParaInativar}/StatusLogico`, {
+              method: 'PUT', // Ou o método HTTP correto para inativação
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ inativo: true }), // Assumindo que você envia um objeto com a propriedade 'inativo'
+            });
+    
+            if (response.ok) {
+              console.log(`Funcionário com ID ${funcionarioIdParaInativar} inativado com sucesso.`);
+              fetchFuncionarios();
+            } 
+            else {
+              console.error('Erro ao inativar funcionário:', response.status);
+            }
+          } 
+          catch (error) {
+            console.error('Erro ao inativar funcionário:', error);
+          } 
+          finally {
+            setFuncionarioIdParaInativar(null); 
+          }
+        }
+    };
+
+    const handleCancelarModal = () => {
+      setIsModalVisible(false);
+      setFuncionarioIdParaInativar(null); 
+    };
 
     useEffect(() => {
         fetchFuncionarios(); // Carrega todos os funcionários inicialmente
@@ -85,11 +139,10 @@ export default function PageFuncionariosHome(){
           largura: '15%',
           render: (funcionario) => new Date(funcionario.dataAdmissao).toLocaleDateString('pt-BR'),
         },
-      ];
-    
-    const navigate = useNavigate();
+    ];
+
     const actionButtonsFuncionarios = [
-        { label: '', icon: <LuEyeOff />, onClick: (funcionario) => console.log('Visualizar:', funcionario) },
+        { label: '', icon: <LuEyeOff />, onClick: handleVisualizarClick },
         { label: '', icon: <LuPencil />, onClick: (funcionario) => {navigate(`/funcionarios/cadastro/${funcionario.id}`); }},
     ];
 
@@ -115,10 +168,16 @@ export default function PageFuncionariosHome(){
                     </Link>
                 </ContainerFiltro>
                 <ContainerResultado>
-                <DataTable
+                    <DataTable
                         data={funcionarios}
                         headerColumns={headerColumns}
                         actionButtons={actionButtonsFuncionarios} // Se você definiu botões de ação
+                    />
+                    <ModalConfirmacao
+                        isOpen={isModalVisible}
+                        onClose={handleCancelarModal}
+                        onConfirm={handleConfirmarInativacao}
+                        mensagem={mensagemModal}
                     />
                 </ContainerResultado>
             </Article>

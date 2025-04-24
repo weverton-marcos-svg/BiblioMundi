@@ -75,3 +75,10 @@ export const ActionButton = styled.button`
     margin-left: 0; /* Remove a margem do primeiro botão */
   }
 `;
+
+export const StyledTrInativo = styled(StyledTr)`
+  opacity: 0.6; /* Diminui a opacidade para indicar inatividade */
+  font-style: italic; /* Adiciona itálico */
+  text-decoration: line-through; /* Adiciona um risco */
+  color: #888; /* Cor mais clara */
+`;

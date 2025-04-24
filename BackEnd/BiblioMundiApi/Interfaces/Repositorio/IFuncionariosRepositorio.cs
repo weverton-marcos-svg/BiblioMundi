@@ -9,7 +9,7 @@ namespace BiblioMundiApi.Interfaces.Repositorio
     {
         Task<List<FuncionariosListarTodosComandoSaida>> ListarTodos(FuncionariosListarTodosComandoEntrada filtros);
         Task<FuncionariosLocalizarPorIdComandoSaida> LocalizarPorId(int Id);
-        Task<FuncionariosEntidade> LocalizarPorEmail(string email);
+        Task<FuncionariosEntidade> LocalizarEntidadePorEmail(string email);
         Task<FuncionariosEntidade> LocalizarEntidadePorId(int id);
     }
 }

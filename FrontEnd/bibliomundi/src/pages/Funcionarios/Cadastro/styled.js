@@ -85,7 +85,7 @@ export const Span = styled.span`
 `;
 
 export const Select = styled.select`
-  height:4vh;
+  height:in;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;

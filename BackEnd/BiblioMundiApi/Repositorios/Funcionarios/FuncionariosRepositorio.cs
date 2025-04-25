@@ -103,7 +103,7 @@ namespace BiblioMundiApi.Repositorios.Funcionarios
 
             return registro;
         }
-        public async Task<FuncionariosEntidade> LocalizarPorEmail(string email)
+        public async Task<FuncionariosEntidade> LocalizarEntidadePorEmail(string email)
         {
             var funcionario = await _conexaoSql.Funcionarios
                 .AsNoTracking()
@@ -111,7 +111,7 @@ namespace BiblioMundiApi.Repositorios.Funcionarios
             
             if (funcionario is null)
             {
-                throw new Exception($"Nenhum funcionário com email {email} encontrado.");
+                funcionario = new FuncionariosEntidade();
             }
 
             return funcionario;

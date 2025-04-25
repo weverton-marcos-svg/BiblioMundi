@@ -5,7 +5,7 @@ import { Form, InputContainer, Label, InputField, Main,InputContainerData, Artic
 
 
 const CadastroFuncionario = () => {
-  const { id } = useParams(); // Obtém o parâmetro 'id' da URL (se existir)
+  const { id } = useParams();
   const navigate = useNavigate();
   const [funcionario, setFuncionario] = useState({
     nome: '',
@@ -14,6 +14,7 @@ const CadastroFuncionario = () => {
     dataAdmissao: '',
     telefone: ''
   });
+  const dateInputRef = useRef(null);
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -31,7 +32,7 @@ const CadastroFuncionario = () => {
     setError('');
     
     try {
-      const response = await fetch(`https://localhost:5000/api/Funcionario/Id?Id=${funcionarioId}`); 
+      const response = await fetch(`https://localhost:5000/api/Funcionario/${funcionarioId}`); 
       if (!response.ok) {
         throw new Error(`Erro ao buscar funcionário: ${response.status}`);
       }
@@ -39,10 +40,11 @@ const CadastroFuncionario = () => {
       setFuncionario({
         nome: data.nome || '', // Use valores padrão caso a API não retorne o campo
         email: data.email || '',
-        idCargo: data.cargo || 0,
+        idCargo: data.cargo.id || 0,
         dataAdmissao: data.dataAdmissao || new Date().toISOString(),
         telefone: data.telefone || '',
       });
+      console.log(funcionario);
     } catch (err) {
       setError('Erro ao carregar dados do funcionário para edição.');
       console.error(err);
@@ -67,7 +69,7 @@ const CadastroFuncionario = () => {
     funcionario.idCargo = parseInt(funcionario.idCargo);
     try {
       const url = isEditing
-        ? `https://localhost:5000/api/Funcionario/Id?Id=${id}` // Rota para edição (PUT ou PATCH)
+        ? `https://localhost:5000/api/Funcionario/${id}` // Rota para edição (PUT ou PATCH)
         : 'https://localhost:5000/api/Funcionario/'; // Rota para cadastro (POST)
       const method = isEditing ? 'PUT' : 'POST';
 
@@ -83,13 +85,14 @@ const CadastroFuncionario = () => {
         throw new Error(`Erro ao ${isEditing ? 'editar' : 'cadastrar'} funcionário: ${response.status}`);
       }
 
-      // Sucesso no cadastro/edição
       console.log(`Funcionário ${isEditing ? 'editado' : 'cadastrado'} com sucesso!`);
       navigate('/funcionarios'); // Redireciona para a página de listagem
-    } catch (err) {
+    }
+    catch (err) {
       setError(`Erro ao ${isEditing ? 'editar' : 'cadastrar'} funcionário.`);
       console.error(err);
-    } finally {
+    }
+    finally {
       setLoading(false);
     }
   };
@@ -105,9 +108,9 @@ const CadastroFuncionario = () => {
 
       const data = await response.json();
       setCargos(data);
-    } catch (error) {
+    } 
+    catch (error) {
       console.error("Erro ao buscar dados da API:", error);
-      // Lógica para lidar com o erro (exibir mensagem para o usuário, etc.)
     }
   }
 
@@ -126,8 +129,7 @@ const CadastroFuncionario = () => {
     return `${year}-${month}-${day}`;
   }
 
-  const dateInputRef = useRef(null);
-  
+
   return (
     <>
       <HeaderPadrao />
@@ -163,12 +165,12 @@ const CadastroFuncionario = () => {
               <Select id="cargo"
                 name="idCargo"
                 onChange={handleChange}
-                value={funcionario.cargo}
+                value={funcionario.idCargo}
               >
-                <option value={0} disabled selected>Selecione...</option>
+                <option value={0} disabled selected={!isEditing}>Selecione...</option>
                 {cargos.map((cargo) => (
                     <option key={cargo.id} value={cargo.id}>
-                      {cargo.descricao}
+                     {cargo.descricao}
                     </option>
                   ))}
               </Select>
@@ -187,12 +189,12 @@ const CadastroFuncionario = () => {
 
               </InputContainerData>
 
-              <Label htmlFor="Telefone">Telefone:</Label>
+              <Label htmlFor="telefone">Telefone:</Label>
               <Span>Adicionar no formato (11) 99999-9999</Span>
               <InputField
                 type="tel"
-                id="Telefone"
-                name="Telefone"
+                id="telefone"
+                name="telefone"
                 value={funcionario.telefone}
                 onChange={handleChange}
               />

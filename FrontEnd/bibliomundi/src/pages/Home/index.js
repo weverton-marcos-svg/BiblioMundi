@@ -2,7 +2,7 @@ import React from "react";
 import CorujaLendo from "../../assets/image/CorujaLendoUmLivro.svg"
 import Logo from "../../assets/image/LogoBiblioMundi.svg";
 import RecursoNaoDisponivel from "../../assets/image/RecursoNaoDisponivel.svg";
-import {PageHeader,NavHeader,ListaOpcao,Opcao,ImgLogo,ContainerImagem,ContainerUser,ImgUser,Main} from "./styled.js";
+import {PageHeader,NavHeader,ListaOpcao,Opcao,ImgLogo,ContainerImagem,ContainerUser,ImgUser,Main,NameUser} from "./styled.js";
 import FooterPadrao from "../../components/FooterPadrao";
 import { FaLock } from "react-icons/fa";
 
@@ -13,8 +13,8 @@ export default function PageHome(){
                 <NavHeader>
                     <ListaOpcao>
                         <Opcao habilitado={false}>Clientes <FaLock/></Opcao>
-                        <Opcao habilitado={false}>Emprestimos <FaLock/> </Opcao>
-                        <Opcao habilitado={false}>Acervo <FaLock/> </Opcao>
+                        <Opcao habilitado={false}>Emprestimo <FaLock/></Opcao>
+                        <Opcao habilitado={false}>Acervo <FaLock/></Opcao>
                         <Opcao habilitado={true} onClick={() => window.location.href = "/funcionarios"}>Funcionários</Opcao>
                     </ListaOpcao>
                 </NavHeader>
@@ -22,8 +22,8 @@ export default function PageHome(){
                     <ImgLogo  src={Logo} alt="Mundo com linhas em volta escrito BiblioMundi (logo)"/>
                 </ContainerImagem>
                 <ContainerUser>
-                    <p>Olá, Weverton Marcos</p> 
-                    <ImgUser src={CorujaLendo} alt="Imagem do perfil" />
+                        <NameUser>Olá, Weverton Marcos</NameUser> 
+                        <ImgUser src={CorujaLendo} alt="Imagem do perfil" />
                 </ContainerUser>
             </PageHeader>
             <Main>

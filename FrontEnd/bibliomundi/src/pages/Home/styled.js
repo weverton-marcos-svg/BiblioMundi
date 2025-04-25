@@ -4,45 +4,50 @@ export const PageHeader = styled.header`
     display:flex;
     flex-direction: row;
     height: 10vh;
-    width: 100vw;
-    justify-content: center;
-    margin: 0;
-    padding:0;
+    width: 90vw;
+    align-items: center;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top: 1vh;
+    border: 1px solid black;
+    border-radius: 15px;
     box-sizing: border-box;
-    padding-top: 5px;
+    padding: 5px;
 `;
 
 export const NavHeader = styled.nav`
     display: flex;
-    width:30%;
-    justify-content:center;
-    border-bottom: 1px solid black;
-    border-bottom-left-radius: 1em;
-    border-top-left-radius: 1em;
-    border-top: 1px solid;
-    border-left: 1px solid;
-    
+    flex:1;
+    align-items: center;
+    padding: 0;
+    max-height: 85%;
+    min-height: 55%;
+    border: 1px solid;
+    border-radius: 10px;
+    // box-sizing: border-box;
+    // padding: 5px;
 `;
 
 export const ListaOpcao = styled.ul`
     display: flex;
     flex-direction: row;
-    border: 1px solid;
-    padding: 0.6em;
-    width: 75%;
-    justify-content: center;
-    background-color: #FFFFFE;
-    border-radius: 0.5em;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    align-items: center;
+    margin: 0;
     box-sizing: border-box;
+    padding: 0px;
 `;
 export const Opcao = styled.li`
+    height:fit-content;
     list-style-type: none;
-    font-size:1em;
+    font-size:1rem;
+    width: 100%;
+    height: fit-content;
     transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transição suave */
-    box-sizing: border-box;
-    padding:5px;
-    background-color: #FFFFFE;
-    font-weight: 700;
+    background-color:transparent;
+    text-align: center;
     color: ${props => props.habilitado ? "black" : "gray"};
     font-weight:700;
     &:hover{ ${props => props.habilitado ? `
@@ -55,35 +60,41 @@ export const Opcao = styled.li`
 
 export const ContainerImagem = styled.div`
     display: flex;
-    justify-content: center;
-    width: 30%;
-    border-bottom: 1px solid black;
-    border-top: 1px solid black;
+    height: 100%;
+    flex:1;
 `;
 
 export const ImgLogo = styled.img`
     width: 20%;
     height: 100%;
+    margin-left: auto;
+    margin-right: auto;
 `;
 
 export const ContainerUser = styled.div`
     display: flex;
+    height: 100%;
+    justify-content: end;
     flex-direction: row;
-    justify-content:end;
-    width:30%;
+    flex:1;
     box-sizing: border-box;
     padding: 0.3em;
-    border-bottom: 1px solid black;
-    border-bottom-right-radius: 1em;
-    border-top-right-radius: 1em;
-    border-top: 1px solid;
-    border-right: 1px solid;
+`;
+
+export const NameUser = styled.p`
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    margin-top:auto;
+    margin-bottom:auto;
 `;
 
 export const ImgUser = styled.img`
+    height: 100%;
+    width:13%;
     border: 1px solid black;
     border-radius: 50%;
-    margin-left:3em;
+    margin-left:15px;
 `;
 
 export const Main = styled.main`

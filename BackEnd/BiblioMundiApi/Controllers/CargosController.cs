@@ -22,7 +22,7 @@ namespace BiblioMundiApi.Controllers
         public async Task<ActionResult<List<CargosListarTodosComandoSaida>>> ListarTodos([FromQuery] PadraoComandoEntrada filtros) =>
             Ok(await _cargosrepositorio.ListarTodos(filtros));
 
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<PadraoConsultaComandoSaida>> LocalizarPorId(int id) =>
             Ok(await _cargosrepositorio.LocalizarPorId(id));
     }

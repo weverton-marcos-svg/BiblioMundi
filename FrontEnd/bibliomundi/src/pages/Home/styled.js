@@ -99,15 +99,9 @@ export const ImgUser = styled.img`
 
 export const Main = styled.main`
     display:flex;
+    flex-direction: column;
     height:80vh;
-    width:90vw;
-    flex-direction:column;
-    align-items:center;
-    text-align:center;
-    border:1px solid black;
-    border-radius:10px;
-    margin-left:auto;
-    margin-right:auto;
-    margin-top: 1vh;
-    margin-bottom: 1vh;
+    width:100%;
+    align-items: center;
+    justify-content: center;
 `;

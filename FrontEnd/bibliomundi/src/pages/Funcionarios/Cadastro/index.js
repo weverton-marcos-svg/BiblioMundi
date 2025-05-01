@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import DefaultHeader from '../../../components/DefaultHeader';
 import InputDate from '../../../components/Inputs/InputDate';
@@ -15,7 +15,6 @@ const CadastroFuncionario = () => {
     dataAdmissao: '',
     telefone: ''
   });
-  const dateInputRef = useRef(null);
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -39,7 +38,7 @@ const CadastroFuncionario = () => {
       }
       const data = await response.json();
       setFuncionario({
-        nome: data.nome || '', // Use valores padrão caso a API não retorne o campo
+        nome: data.nome || '',
         email: data.email || '',
         idCargo: data.cargo.id || 0,
         dataAdmissao: data.dataAdmissao || new Date().toISOString(),
@@ -48,7 +47,6 @@ const CadastroFuncionario = () => {
       console.log(funcionario);
     } catch (err) {
       setError('Erro ao carregar dados do funcionário para edição.');
-      console.error(err);
     } finally {
       setLoading(false);
     }
@@ -183,7 +181,6 @@ const CadastroFuncionario = () => {
                 titulo="Data de Admissão:"
                 value={formatDateForInput(funcionario.dataAdmissao)}
                 onChange={handleChange}
-                ref={dateInputRef}
                 required={true}
               />
 

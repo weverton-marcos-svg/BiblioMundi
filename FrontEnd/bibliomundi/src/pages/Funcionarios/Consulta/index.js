@@ -7,6 +7,7 @@ import InputGeneric from "../../../components/Inputs/InputGeneric";
 import InputDate from "../../../components/Inputs/InputDate";
 import DefaultDataTable from "../../../components/DefaultDataTable";
 import ConfirmationModal from "../../../components/Modal/ConfirmationModal";
+import StandardButton from "../../../components/StandardButton";
 import { LuPencil,LuEyeOff  } from "react-icons/lu";
 import {Main, 
   ContainerFiltro, 
@@ -167,9 +168,10 @@ export default function PageFuncionariosHome(){
                     }
                   </AgrupamentoFiltro>
 
-                  <Link to="/funcionarios/cadastro">
-                    <BotaoCadastro>Cadastar novo funcionario</BotaoCadastro>
-                  </Link>
+                  <StandardButton
+                    texto={"Cadastar novo funcionario"}
+                    redirecionarUrl={"/funcionarios/cadastro"}
+                  />
 
                 </ContainerFiltro>
 

@@ -48,6 +48,7 @@ const estilizarIconeFiltro = (IconeBase) => styled(IconeBase)`
     pointer-events: auto; 
     padding: 0 5px;
     margin:0 2px;
+    border: 1px solid gray;
 `;
 
 export const RefreshIconeFiltro = estilizarIconeFiltro(RiRefreshFill);

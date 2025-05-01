@@ -55,7 +55,6 @@ export default function PageFuncionariosHome(){
             Inativo: funcionarioAPI.inativo || false,
             cargo: funcionarioAPI.cargo.descricao || '',
             dataAdmissao: funcionarioAPI.dataAdmissao || null,
-            Inativo: funcionarioAPI.inativo || false,
           }));
           setFuncionarios(listagemFuncionario);
         } catch (error) {

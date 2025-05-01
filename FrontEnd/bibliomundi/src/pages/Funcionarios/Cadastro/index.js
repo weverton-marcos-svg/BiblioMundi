@@ -3,8 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import DefaultHeader from '../../../components/DefaultHeader';
 import InputDate from '../../../components/Inputs/InputDate';
 import InputGeneric from '../../../components/Inputs/InputGeneric';
-import { Form, InputContainer, Label, InputField, Main, Article, ButtonCadastro, ButtonCancelar, Span, Select, ContainerButao} from './styled'; 
-
+import { Form, InputContainer, Label, Main, Article, ButtonCadastro, ButtonCancelar, Span, Select, ContainerButao} from './styled'; 
 
 const CadastroFuncionario = () => {
   const { id } = useParams();

@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import DefaultHeader from '../../../components/DefaultHeader';
-import { Form, InputContainer, Label, InputField, Main,InputContainerData, Article, ButtonCadastro, ButtonCancelar, Span, Select, ContainerButao, InputFieldDate, CalendarIcon} from './styled'; // Importe os estilos do form e input/
+import InputDate from '../../../components/Inputs/InputDate';
+import InputGeneric from '../../../components/Inputs/InputGeneric';
+import { Form, InputContainer, Label, InputField, Main, Article, ButtonCadastro, ButtonCancelar, Span, Select, ContainerButao} from './styled'; 
 
 
 const CadastroFuncionario = () => {
@@ -141,24 +143,24 @@ const CadastroFuncionario = () => {
 
           <Form onSubmit={handleSubmit} disabled={loading}>
             <InputContainer>
-              <Label htmlFor="nome">Nome:</Label>
-              <InputField
+              <InputGeneric
                 type="text"
                 id="nome"
                 name="nome"
+                titulo="Nome:"
                 value={funcionario.nome}
                 onChange={handleChange}
-                required
+                required={true}
               />     
 
-              <Label htmlFor="email">Email:</Label>
-              <InputField
+              <InputGeneric
                 type="email"
                 id="email"
                 name="email"
                 value={funcionario.email}
                 onChange={handleChange}
-                required
+                required={true}
+                titulo="Email:"
               />
 
               <Label htmlFor="cargo">Cargo:</Label>
@@ -167,37 +169,34 @@ const CadastroFuncionario = () => {
                 onChange={handleChange}
                 value={funcionario.idCargo}
               >
-                <option value={0} disabled selected={!isEditing}>Selecione...</option>
-                {cargos.map((cargo) => (
-                    <option key={cargo.id} value={cargo.id}>
-                     {cargo.descricao}
-                    </option>
-                  ))}
+              <option value={0} disabled selected={!isEditing}>Selecione...</option>
+              {cargos.map((cargo) => (
+                  <option key={cargo.id} value={cargo.id}>
+                    {cargo.descricao}
+                  </option>
+                ))}
               </Select>
-              
-              <Label htmlFor="dataAdmissao">Data de Admissão:</Label>
-              <InputContainerData>
-                <InputFieldDate
-                  type="date"
-                  id="dataAdmissao"
-                  name="dataAdmissao"
-                  value={formatDateForInput(funcionario.dataAdmissao)}
-                  onChange={handleChange}
-                  ref={dateInputRef}
-                />
-                <CalendarIcon onClick={() =>dateInputRef.current.showPicker()}/>
 
-              </InputContainerData>
+              <InputDate
+                type="date"
+                id="dataAdmissao"
+                name="dataAdmissao"
+                titulo="Data de Admissão:"
+                value={formatDateForInput(funcionario.dataAdmissao)}
+                onChange={handleChange}
+                ref={dateInputRef}
+                required={true}
+              />
 
-              <Label htmlFor="telefone">Telefone:</Label>
-              <Span>Adicionar no formato (11) 99999-9999</Span>
-              <InputField
+              <InputGeneric
                 type="tel"
                 id="telefone"
                 name="telefone"
+                titulo="Telefone:"
                 value={funcionario.telefone}
                 onChange={handleChange}
               />
+              <Span>Adicionar no formato (11) 99999-9999</Span>
             </InputContainer>
             
             <ContainerButao>

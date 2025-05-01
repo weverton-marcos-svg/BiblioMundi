@@ -1,4 +1,4 @@
-import React, { useState , useEffect, useRef } from "react";
+import React, { useState , useEffect } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import DefaultHeader from "../../../components/DefaultHeader";
 import FooterPadrao from "../../../components/StandardFooter";
@@ -7,10 +7,18 @@ import InputGeneric from "../../../components/Inputs/InputGeneric";
 import InputDate from "../../../components/Inputs/InputDate";
 import DefaultDataTable from "../../../components/DefaultDataTable";
 import ConfirmationModal from "../../../components/Modal/ConfirmationModal";
-import { FaFilter,FaFilterCircleDollar,FaFilterCircleXmark } from "react-icons/fa6";
 import { LuPencil,LuEyeOff  } from "react-icons/lu";
-import { RiRefreshFill } from "react-icons/ri";
-import {Main, ContainerFiltro, ContainerResultado, Article, IconeFiltro, BotaoCadastro, AgrupamentoFiltro,ContainerFiltroData} from './styled';
+import {Main, 
+  ContainerFiltro, 
+  ContainerResultado, 
+  Article, 
+  BotaoCadastro, 
+  AgrupamentoFiltro,
+  ContainerFiltroData,
+  RefreshIconeFiltro,
+  FilterIconeFiltro,
+  FilterDollarIconeFiltro,
+} from './styled';
 
 export default function PageFuncionariosHome(){
 
@@ -24,7 +32,6 @@ export default function PageFuncionariosHome(){
     const [funcionarioIdParaInativar, setFuncionarioIdParaInativar] = useState(null);
     const [mensagemModal, setMensagemModal] = useState('');
     const navigate = useNavigate();
-    const dateInputRef = useRef(null);
 
     const fetchFuncionarios = async (filtros = {}) => {
         let url = 'https://localhost:5000/api/Funcionario';
@@ -152,21 +159,21 @@ export default function PageFuncionariosHome(){
         <Main>
             <Article>
                 <ContainerFiltro>
-                    <AgrupamentoFiltro >
-                        <IconeFiltro onClick={() => fetchFuncionarios()}>
-                            <RiRefreshFill />
-                        </IconeFiltro>
-                        <IconeFiltro onClick={() => setFiltroVisivel(true)}>
-                            {filtroVisivel ? <FaFilterCircleDollar /> : <FaFilter />} 
-                        </IconeFiltro>
-                        <IconeFiltro onClick={() => handleClearFilters()}>
-                            <FaFilterCircleXmark />
-                        </IconeFiltro>
-                    </AgrupamentoFiltro>
-                    <Link to="/funcionarios/cadastro">
-                         <BotaoCadastro>Cadastrar</BotaoCadastro>
-                    </Link>
+
+                  <AgrupamentoFiltro >
+                    <RefreshIconeFiltro onClick={() => fetchFuncionarios()} />
+                    {filtroVisivel 
+                      ? <FilterDollarIconeFiltro onClick={() => setFiltroVisivel(false)} />
+                      : <FilterIconeFiltro onClick={() => setFiltroVisivel(true)} />
+                    }
+                  </AgrupamentoFiltro>
+
+                  <Link to="/funcionarios/cadastro">
+                    <BotaoCadastro>Cadastar novo funcionario</BotaoCadastro>
+                  </Link>
+
                 </ContainerFiltro>
+
                 <ContainerResultado>
                     <DefaultDataTable
                         data={funcionarios}
@@ -193,8 +200,7 @@ export default function PageFuncionariosHome(){
                         type={"date"}
                         value={dataAdmissaoInicial}
                         onChange={(e) => setDataAdmissaoInicial(e.target.value)}
-                        ref={dateInputRef}
-                    />
+                      />
 
                     <InputDate
                         htmlFor={"DataAdmissaoFinal"}
@@ -202,8 +208,8 @@ export default function PageFuncionariosHome(){
                         type={"date"}
                         value={dataAdmissaoFinal}
                         onChange={(e) => setDataAdmissaoFinal(e.target.value)}
-                        ref={dateInputRef}
-                    />
+                      />
+
                 </ContainerFiltroData>
 
                 <InputGeneric 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import HeaderPadrao from '../../../components/HeaderPadrao';
+import DefaultHeader from '../../../components/DefaultHeader';
 import { Form, InputContainer, Label, InputField, Main,InputContainerData, Article, ButtonCadastro, ButtonCancelar, Span, Select, ContainerButao, InputFieldDate, CalendarIcon} from './styled'; // Importe os estilos do form e input/
 
 
@@ -132,7 +132,7 @@ const CadastroFuncionario = () => {
 
   return (
     <>
-      <HeaderPadrao />
+      <DefaultHeader />
       <Main>
         <Article>
           <h2>{isEditing ? 'Editar Funcionário' : 'Cadastrar Funcionário'}</h2>

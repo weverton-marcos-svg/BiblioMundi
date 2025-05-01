@@ -3,7 +3,7 @@ import CorujaLendo from "../../assets/image/CorujaLendoUmLivro.svg"
 import Logo from "../../assets/image/LogoBiblioMundi.svg";
 import RecursoNaoDisponivel from "../../assets/image/RecursoNaoDisponivel.svg";
 import {PageHeader,NavHeader,ListaOpcao,Opcao,ImgLogo,ContainerImagem,ContainerUser,ImgUser,Main,NameUser} from "./styled.js";
-import FooterPadrao from "../../components/FooterPadrao";
+import StandardFooter from "../../components/StandardFooter";
 import { FaLock } from "react-icons/fa";
 
 export default function PageHome(){
@@ -31,7 +31,7 @@ export default function PageHome(){
                 <span>OPS!... Esse recurso ainda não está disponível, mas não se preocupa nosso time já está trabalhando
                     para disponibilizar esse novo recurso para você!.</span>
             </Main>
-            <FooterPadrao />
+            <StandardFooter />
         </>
     )
 }

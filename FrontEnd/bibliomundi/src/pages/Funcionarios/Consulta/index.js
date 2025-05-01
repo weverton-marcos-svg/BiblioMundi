@@ -1,12 +1,12 @@
-import React, { useState , useEffect } from "react";
+import React, { useState , useEffect, useRef } from "react";
 import { Link, useNavigate } from 'react-router-dom';
-import HeaderPadrao from "../../../components/HeaderPadrao";
-import FooterPadrao from "../../../components/FooterPadrao";
-import FiltroLateral from "../../../components/FiltroLatereal";
-import CampoBuscaTexto from "../../../components/Inputs/CampoBuscaTexto";
-import CampoBuscaData from "../../../components/Inputs/CampoBuscaData"
-import DataTable from "../../../components/ModeloTabela";
-import ModalConfirmacao from "../../../components/Modal"
+import DefaultHeader from "../../../components/DefaultHeader";
+import FooterPadrao from "../../../components/StandardFooter";
+import SideFilter from "../../../components/SideFilter";
+import InputGeneric from "../../../components/Inputs/InputGeneric";
+import InputDate from "../../../components/Inputs/InputDate";
+import DefaultDataTable from "../../../components/DefaultDataTable";
+import ConfirmationModal from "../../../components/Modal/ConfirmationModal";
 import { FaFilter,FaFilterCircleDollar,FaFilterCircleXmark } from "react-icons/fa6";
 import { LuPencil,LuEyeOff  } from "react-icons/lu";
 import { RiRefreshFill } from "react-icons/ri";
@@ -24,6 +24,7 @@ export default function PageFuncionariosHome(){
     const [funcionarioIdParaInativar, setFuncionarioIdParaInativar] = useState(null);
     const [mensagemModal, setMensagemModal] = useState('');
     const navigate = useNavigate();
+    const dateInputRef = useRef(null);
 
     const fetchFuncionarios = async (filtros = {}) => {
         let url = 'https://localhost:5000/api/Funcionario';
@@ -52,7 +53,6 @@ export default function PageFuncionariosHome(){
           setFuncionarios(listagemFuncionario);
         } catch (error) {
           console.error("Erro ao buscar dados da API:", error);
-          // Lógica para lidar com o erro (exibir mensagem para o usuário, etc.)
         }
     };
 
@@ -148,7 +148,7 @@ export default function PageFuncionariosHome(){
 
     return(
         <>
-        <HeaderPadrao />
+        <DefaultHeader />
         <Main>
             <Article>
                 <ContainerFiltro>
@@ -156,8 +156,8 @@ export default function PageFuncionariosHome(){
                         <IconeFiltro onClick={() => fetchFuncionarios()}>
                             <RiRefreshFill />
                         </IconeFiltro>
-                        <IconeFiltro onClick={() => setFiltroVisivel(true)}> {/* Abre o modal */}
-                            {filtroVisivel ? <FaFilterCircleDollar /> : <FaFilter />} {/* Use apenas o ícone de filtro para abrir */}
+                        <IconeFiltro onClick={() => setFiltroVisivel(true)}>
+                            {filtroVisivel ? <FaFilterCircleDollar /> : <FaFilter />} 
                         </IconeFiltro>
                         <IconeFiltro onClick={() => handleClearFilters()}>
                             <FaFilterCircleXmark />
@@ -168,12 +168,12 @@ export default function PageFuncionariosHome(){
                     </Link>
                 </ContainerFiltro>
                 <ContainerResultado>
-                    <DataTable
+                    <DefaultDataTable
                         data={funcionarios}
                         headerColumns={headerColumns}
                         actionButtons={actionButtonsFuncionarios} // Se você definiu botões de ação
                     />
-                    <ModalConfirmacao
+                    <ConfirmationModal
                         isOpen={isModalVisible}
                         onClose={handleCancelarModal}
                         onConfirm={handleConfirmarInativacao}
@@ -184,43 +184,47 @@ export default function PageFuncionariosHome(){
         </Main>
 
         {filtroVisivel && ( 
-            <FiltroLateral onClose={() => setFiltroVisivel(false)} onApplyFilters={handleApplyFilters} onClearFilters={handleClearFilters}>
+            <SideFilter onClose={() => setFiltroVisivel(false)} onApplyFilters={handleApplyFilters} onClearFilters={handleClearFilters}>
 
                 <ContainerFiltroData>
-                    <CampoBuscaData
+                    <InputDate
                         htmlFor={"DataAdmissaoInicial"}
                         titulo={"Data de Admissão:"}
                         type={"date"}
                         value={dataAdmissaoInicial}
                         onChange={(e) => setDataAdmissaoInicial(e.target.value)}
+                        ref={dateInputRef}
                     />
 
-                    <CampoBuscaData
+                    <InputDate
                         htmlFor={"DataAdmissaoFinal"}
                         titulo={"Data de Admissão"}
                         type={"date"}
                         value={dataAdmissaoFinal}
                         onChange={(e) => setDataAdmissaoFinal(e.target.value)}
+                        ref={dateInputRef}
                     />
                 </ContainerFiltroData>
 
-                <CampoBuscaTexto  
-                        htmlFor={"BuscaNomeFuncionario"}
-                        titulo={"Nome Funcionário:"}
-                        type={"text"}
-                        value={nomeFiltro}
-                        onChange={(e) => setNomeFiltro(e.target.value)} // Atualiza o estado nomeFiltro
+                <InputGeneric 
+                  htmlFor={"BuscaNomeFuncionario"}
+                  titulo={"Nome Funcionário:"}
+                  type={"text"}
+                  value={nomeFiltro}
+                  onChange={(e) => setNomeFiltro(e.target.value)}
+                  required={false}
                 />
 
-                <CampoBuscaTexto 
-                        htmlFor={"BuscaCargo"}
-                        titulo={"Cargo:"}
-                        type={"text"}
-                        value={cargoFiltro}
-                        onChange={(e) => setCargoFiltro(e.target.value)}
+                <InputGeneric 
+                  htmlFor={"BuscaCargo"}
+                  titulo={"Cargo:"}
+                  type={"text"}
+                  value={cargoFiltro}
+                  onChange={(e) => setCargoFiltro(e.target.value)}
+                  required={false}
                 />
 
-            </FiltroLateral>
+            </SideFilter>
         )}
         <FooterPadrao />
         </>

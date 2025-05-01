@@ -1,7 +1,7 @@
 import React from 'react';
 import { ModalOverlay, ModalContainer, ModalButton, Button} from "./styled";
 
-export default function ModalConfirmacao({ isOpen, onClose, onConfirm, mensagem }) {
+export default function ConfirmationModal({ isOpen, onClose, onConfirm, mensagem }) {
     if (!isOpen) return null;
 
     return (

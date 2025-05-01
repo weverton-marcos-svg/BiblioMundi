@@ -3,7 +3,7 @@ import { RiArrowGoBackFill } from "react-icons/ri";
 import ImgLogo from "../../assets/image/LogoBiblioMundi.svg"
 import {Header,Img, Span} from "./styled"
 
-export default function HeaderPadrao(){
+export default function DefaultHeader(){
     return (
         <Header>
             <Span  onClick={() => window.history.back()}>  Voltar <RiArrowGoBackFill /></Span>

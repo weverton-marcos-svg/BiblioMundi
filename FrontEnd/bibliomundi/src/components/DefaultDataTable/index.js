@@ -5,7 +5,7 @@ const getStyledTr = (isInativo) => {
   return isInativo ? StyledTrInativo : StyledTr;
 };
 
-export default function DataTable ({ data, headerColumns, actionButtons }) {
+export default function DefaultDataTable ({ data, headerColumns, actionButtons }) {
 return (
     <StyledTable>
       <StyledThead>

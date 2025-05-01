@@ -1,16 +1,25 @@
 import React, { useState , useEffect } from "react";
 import { Link, useNavigate } from 'react-router-dom';
-import HeaderPadrao from "../../../components/HeaderPadrao";
-import FooterPadrao from "../../../components/FooterPadrao";
-import FiltroLateral from "../../../components/FiltroLatereal";
-import CampoBuscaTexto from "../../../components/Inputs/CampoBuscaTexto";
-import CampoBuscaData from "../../../components/Inputs/CampoBuscaData"
-import DataTable from "../../../components/ModeloTabela";
-import ModalConfirmacao from "../../../components/Modal"
-import { FaFilter,FaFilterCircleDollar,FaFilterCircleXmark } from "react-icons/fa6";
+import DefaultHeader from "../../../components/DefaultHeader";
+import FooterPadrao from "../../../components/StandardFooter";
+import SideFilter from "../../../components/SideFilter";
+import InputGeneric from "../../../components/Inputs/InputGeneric";
+import InputDate from "../../../components/Inputs/InputDate";
+import DefaultDataTable from "../../../components/DefaultDataTable";
+import ConfirmationModal from "../../../components/Modal/ConfirmationModal";
+import StandardButton from "../../../components/StandardButton";
 import { LuPencil,LuEyeOff  } from "react-icons/lu";
-import { RiRefreshFill } from "react-icons/ri";
-import {Main, ContainerFiltro, ContainerResultado, Article, IconeFiltro, BotaoCadastro, AgrupamentoFiltro,ContainerFiltroData} from './styled';
+import {Main, 
+  ContainerFiltro, 
+  ContainerResultado, 
+  Article, 
+  BotaoCadastro, 
+  AgrupamentoFiltro,
+  ContainerFiltroData,
+  RefreshIconeFiltro,
+  FilterIconeFiltro,
+  FilterDollarIconeFiltro,
+} from './styled';
 
 export default function PageFuncionariosHome(){
 
@@ -47,12 +56,10 @@ export default function PageFuncionariosHome(){
             Inativo: funcionarioAPI.inativo || false,
             cargo: funcionarioAPI.cargo.descricao || '',
             dataAdmissao: funcionarioAPI.dataAdmissao || null,
-            Inativo: funcionarioAPI.inativo || false,
           }));
           setFuncionarios(listagemFuncionario);
         } catch (error) {
           console.error("Erro ao buscar dados da API:", error);
-          // Lógica para lidar com o erro (exibir mensagem para o usuário, etc.)
         }
     };
 
@@ -148,32 +155,33 @@ export default function PageFuncionariosHome(){
 
     return(
         <>
-        <HeaderPadrao />
+        <DefaultHeader />
         <Main>
             <Article>
                 <ContainerFiltro>
-                    <AgrupamentoFiltro >
-                        <IconeFiltro onClick={() => fetchFuncionarios()}>
-                            <RiRefreshFill />
-                        </IconeFiltro>
-                        <IconeFiltro onClick={() => setFiltroVisivel(true)}> {/* Abre o modal */}
-                            {filtroVisivel ? <FaFilterCircleDollar /> : <FaFilter />} {/* Use apenas o ícone de filtro para abrir */}
-                        </IconeFiltro>
-                        <IconeFiltro onClick={() => handleClearFilters()}>
-                            <FaFilterCircleXmark />
-                        </IconeFiltro>
-                    </AgrupamentoFiltro>
-                    <Link to="/funcionarios/cadastro">
-                         <BotaoCadastro>Cadastrar</BotaoCadastro>
-                    </Link>
+
+                  <AgrupamentoFiltro >
+                    <RefreshIconeFiltro onClick={() => fetchFuncionarios()} />
+                    {filtroVisivel 
+                      ? <FilterDollarIconeFiltro onClick={() => setFiltroVisivel(false)} />
+                      : <FilterIconeFiltro onClick={() => setFiltroVisivel(true)} />
+                    }
+                  </AgrupamentoFiltro>
+
+                  <StandardButton
+                    texto={"Cadastar novo funcionario"}
+                    redirecionarUrl={"/funcionarios/cadastro"}
+                  />
+
                 </ContainerFiltro>
+
                 <ContainerResultado>
-                    <DataTable
+                    <DefaultDataTable
                         data={funcionarios}
                         headerColumns={headerColumns}
                         actionButtons={actionButtonsFuncionarios} // Se você definiu botões de ação
                     />
-                    <ModalConfirmacao
+                    <ConfirmationModal
                         isOpen={isModalVisible}
                         onClose={handleCancelarModal}
                         onConfirm={handleConfirmarInativacao}
@@ -184,43 +192,46 @@ export default function PageFuncionariosHome(){
         </Main>
 
         {filtroVisivel && ( 
-            <FiltroLateral onClose={() => setFiltroVisivel(false)} onApplyFilters={handleApplyFilters} onClearFilters={handleClearFilters}>
+            <SideFilter onClose={() => setFiltroVisivel(false)} onApplyFilters={handleApplyFilters} onClearFilters={handleClearFilters}>
 
                 <ContainerFiltroData>
-                    <CampoBuscaData
+                    <InputDate
                         htmlFor={"DataAdmissaoInicial"}
                         titulo={"Data de Admissão:"}
                         type={"date"}
                         value={dataAdmissaoInicial}
                         onChange={(e) => setDataAdmissaoInicial(e.target.value)}
-                    />
+                      />
 
-                    <CampoBuscaData
+                    <InputDate
                         htmlFor={"DataAdmissaoFinal"}
                         titulo={"Data de Admissão"}
                         type={"date"}
                         value={dataAdmissaoFinal}
                         onChange={(e) => setDataAdmissaoFinal(e.target.value)}
-                    />
+                      />
+
                 </ContainerFiltroData>
 
-                <CampoBuscaTexto  
-                        htmlFor={"BuscaNomeFuncionario"}
-                        titulo={"Nome Funcionário:"}
-                        type={"text"}
-                        value={nomeFiltro}
-                        onChange={(e) => setNomeFiltro(e.target.value)} // Atualiza o estado nomeFiltro
+                <InputGeneric 
+                  htmlFor={"BuscaNomeFuncionario"}
+                  titulo={"Nome Funcionário:"}
+                  type={"text"}
+                  value={nomeFiltro}
+                  onChange={(e) => setNomeFiltro(e.target.value)}
+                  required={false}
                 />
 
-                <CampoBuscaTexto 
-                        htmlFor={"BuscaCargo"}
-                        titulo={"Cargo:"}
-                        type={"text"}
-                        value={cargoFiltro}
-                        onChange={(e) => setCargoFiltro(e.target.value)}
+                <InputGeneric 
+                  htmlFor={"BuscaCargo"}
+                  titulo={"Cargo:"}
+                  type={"text"}
+                  value={cargoFiltro}
+                  onChange={(e) => setCargoFiltro(e.target.value)}
+                  required={false}
                 />
 
-            </FiltroLateral>
+            </SideFilter>
         )}
         <FooterPadrao />
         </>

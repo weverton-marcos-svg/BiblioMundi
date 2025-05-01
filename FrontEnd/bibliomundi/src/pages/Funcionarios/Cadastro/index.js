@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import HeaderPadrao from '../../../components/HeaderPadrao';
-import { Form, InputContainer, Label, InputField, Main,InputContainerData, Article, ButtonCadastro, ButtonCancelar, Span, Select, ContainerButao, InputFieldDate, CalendarIcon} from './styled'; // Importe os estilos do form e input/
-
+import DefaultHeader from '../../../components/DefaultHeader';
+import InputDate from '../../../components/Inputs/InputDate';
+import InputGeneric from '../../../components/Inputs/InputGeneric';
+import { Form, InputContainer, Label, Main, Article, ButtonCadastro, ButtonCancelar, Span, Select, ContainerButao} from './styled'; 
 
 const CadastroFuncionario = () => {
   const { id } = useParams();
@@ -14,7 +15,6 @@ const CadastroFuncionario = () => {
     dataAdmissao: '',
     telefone: ''
   });
-  const dateInputRef = useRef(null);
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -38,7 +38,7 @@ const CadastroFuncionario = () => {
       }
       const data = await response.json();
       setFuncionario({
-        nome: data.nome || '', // Use valores padrão caso a API não retorne o campo
+        nome: data.nome || '',
         email: data.email || '',
         idCargo: data.cargo.id || 0,
         dataAdmissao: data.dataAdmissao || new Date().toISOString(),
@@ -47,7 +47,6 @@ const CadastroFuncionario = () => {
       console.log(funcionario);
     } catch (err) {
       setError('Erro ao carregar dados do funcionário para edição.');
-      console.error(err);
     } finally {
       setLoading(false);
     }
@@ -132,7 +131,7 @@ const CadastroFuncionario = () => {
 
   return (
     <>
-      <HeaderPadrao />
+      <DefaultHeader />
       <Main>
         <Article>
           <h2>{isEditing ? 'Editar Funcionário' : 'Cadastrar Funcionário'}</h2>
@@ -141,24 +140,24 @@ const CadastroFuncionario = () => {
 
           <Form onSubmit={handleSubmit} disabled={loading}>
             <InputContainer>
-              <Label htmlFor="nome">Nome:</Label>
-              <InputField
+              <InputGeneric
                 type="text"
                 id="nome"
                 name="nome"
+                titulo="Nome:"
                 value={funcionario.nome}
                 onChange={handleChange}
-                required
+                required={true}
               />     
 
-              <Label htmlFor="email">Email:</Label>
-              <InputField
+              <InputGeneric
                 type="email"
                 id="email"
                 name="email"
                 value={funcionario.email}
                 onChange={handleChange}
-                required
+                required={true}
+                titulo="Email:"
               />
 
               <Label htmlFor="cargo">Cargo:</Label>
@@ -167,37 +166,33 @@ const CadastroFuncionario = () => {
                 onChange={handleChange}
                 value={funcionario.idCargo}
               >
-                <option value={0} disabled selected={!isEditing}>Selecione...</option>
-                {cargos.map((cargo) => (
-                    <option key={cargo.id} value={cargo.id}>
-                     {cargo.descricao}
-                    </option>
-                  ))}
+              <option value={0} disabled selected={!isEditing}>Selecione...</option>
+              {cargos.map((cargo) => (
+                  <option key={cargo.id} value={cargo.id}>
+                    {cargo.descricao}
+                  </option>
+                ))}
               </Select>
-              
-              <Label htmlFor="dataAdmissao">Data de Admissão:</Label>
-              <InputContainerData>
-                <InputFieldDate
-                  type="date"
-                  id="dataAdmissao"
-                  name="dataAdmissao"
-                  value={formatDateForInput(funcionario.dataAdmissao)}
-                  onChange={handleChange}
-                  ref={dateInputRef}
-                />
-                <CalendarIcon onClick={() =>dateInputRef.current.showPicker()}/>
 
-              </InputContainerData>
+              <InputDate
+                type="date"
+                id="dataAdmissao"
+                name="dataAdmissao"
+                titulo="Data de Admissão:"
+                value={formatDateForInput(funcionario.dataAdmissao)}
+                onChange={handleChange}
+                required={true}
+              />
 
-              <Label htmlFor="telefone">Telefone:</Label>
-              <Span>Adicionar no formato (11) 99999-9999</Span>
-              <InputField
+              <InputGeneric
                 type="tel"
                 id="telefone"
                 name="telefone"
+                titulo="Telefone:"
                 value={funcionario.telefone}
                 onChange={handleChange}
               />
+              <Span>Adicionar no formato (11) 99999-9999</Span>
             </InputContainer>
             
             <ContainerButao>

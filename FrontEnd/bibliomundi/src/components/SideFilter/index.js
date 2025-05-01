@@ -1,9 +1,8 @@
-// components/FiltroLateral.js
 import React from 'react';
-import { FaTimes } from 'react-icons/fa'; // Importe um ícone de fechar
+import { FaTimes } from 'react-icons/fa';
 import { FiltroLateralContainer, FiltroConteudo, BotaoFechar,BotaoAceitar,ContainerButton, BotaoLimpar} from "./styled";
 
-function FiltroLateral({ onClose, children, onApplyFilters , onClearFilters  }) {
+export default function SideFilter({ onClose, children, onApplyFilters , onClearFilters  }) {
   return (
     <FiltroLateralContainer>
       <FiltroConteudo>
@@ -21,7 +20,3 @@ function FiltroLateral({ onClose, children, onApplyFilters , onClearFilters  }) 
     </FiltroLateralContainer>
   );
 }
-
-
-
-export default FiltroLateral;

@@ -13,8 +13,11 @@ export default class InputGeneric extends React.Component {
                     value={this.props.value}
                     onChange={this.props.onChange}
                     required={this.props.required}
+                    maxLength={this.props.maxLength}
+                    pattern={this.props.pattern}
+                    oninput={this.props.onInput}
+                    placeholder={this.props.placeholder}
                 />
-
             </FieldContainer>
         )
     }

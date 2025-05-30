@@ -12,10 +12,10 @@ export default function PageHome(){
             <PageHeader>
                 <NavHeader>
                     <ListaOpcao>
-                        <Opcao habilitado={false}>Clientes <FaLock/></Opcao>
-                        <Opcao habilitado={false}>Emprestimo <FaLock/></Opcao>
-                        <Opcao habilitado={false}>Acervo <FaLock/></Opcao>
-                        <Opcao habilitado={true} onClick={() => window.location.href = "/funcionarios"}>Funcionários</Opcao>
+                        <Opcao habilitado={true}  onClick={() => window.location.href = "/clientes"} >Clientes </Opcao>
+                        <Opcao habilitado={false} onClick={() => window.location.href = "/Emprestimo"}>Emprestimo <FaLock/></Opcao>
+                        <Opcao habilitado={false} onClick={() => window.location.href = "/Acervo"}>Acervo <FaLock/></Opcao>
+                        <Opcao habilitado={true}  onClick={() => window.location.href = "/funcionarios"}>Funcionários</Opcao>
                     </ListaOpcao>
                 </NavHeader>
                 <ContainerImagem>

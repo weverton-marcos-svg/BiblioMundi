@@ -13,9 +13,9 @@ namespace BiblioMundiApi.Data.Conexao
     public class ConexaoSql : DbContext
     {
         public string StringConexaoBd { get; set; }
-
         public DbSet<CargoEntidade> Cargo { get; set; }
         public DbSet<FuncionariosEntidade> Funcionarios { get; set; }
+        public DbSet<ClientesEntidade> Clientes { get; set; }
 
         public ConexaoSql(string stringConexaoBd)
         {

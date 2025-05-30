@@ -49,10 +49,13 @@ export const Opcao = styled.li`
     background-color:transparent;
     text-align: center;
     color: ${props => props.habilitado ? "black" : "gray"};
+    pointer-events: ${props => props.habilitado ? "auto" : "none"};
     font-weight:700;
+
     &:hover{ ${props => props.habilitado ? `
         font-weight: bold;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); 
+        border-radius: 10px;
         transform: translateY(-5px); /* Move o item para cima */
         padding: 2px; ` : ""}
     }

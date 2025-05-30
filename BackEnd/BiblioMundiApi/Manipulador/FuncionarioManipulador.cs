@@ -41,7 +41,7 @@ namespace BiblioMundiApi.Manipulador
         {
             if (id <= 0)
             {
-                throw new Exception("Id para alteração do produto não foi informado.");              
+                throw new Exception("Id para alteração do funcionário não foi informado.");              
             }
 
             await Validacao(parametrosAlteracao, id);

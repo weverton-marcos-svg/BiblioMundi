@@ -10,8 +10,6 @@ export const Main = styled.main`
     margin: 10px auto;
 `;
 
-export const  Article = styled.article``;
-
 export const ContainerFiltro = styled.section`
     display: flex;
     height:8vh;
@@ -36,6 +34,15 @@ export const AgrupamentoFiltro = styled.div`
     }
 `;
 
+export const ContainerFiltroData = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between; 
+  align-items: center;
+  gap: 10px; 
+  margin-top: 10px; 
+`;
+
 const estilizarIconeFiltro = (IconeBase) => styled(IconeBase)`
     display: flex;
     height: 80%;
@@ -55,30 +62,3 @@ const estilizarIconeFiltro = (IconeBase) => styled(IconeBase)`
 export const RefreshIconeFiltro = estilizarIconeFiltro(RiRefreshFill);
 export const FilterIconeFiltro = estilizarIconeFiltro(FaFilter);
 export const FilterDollarIconeFiltro = estilizarIconeFiltro(FaFilterCircleDollar);
-
-export const BotaoCadastro = styled.button`
-    width: auto;
-    height: 2.2em;
-    border-radius: 10px;
-    border: 1px solid;
-    background-color: green;
-    color: white;
-
-    box-sizing: border-box;
-    padding: 1px 10px;
-`;
-
-export const ButtoAcao = styled.button`
-    background-color: transparent;
-    border-radius: 10px;
-    border: 1px solid black;
-`;
-
-export const ContainerFiltroData = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: space-between; 
-  align-items: center;
-  gap: 10px; 
-  margin-top: 10px; 
-`;

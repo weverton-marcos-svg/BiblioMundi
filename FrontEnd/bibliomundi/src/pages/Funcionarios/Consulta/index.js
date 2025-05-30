@@ -1,7 +1,7 @@
 import React, { useState , useEffect } from "react";
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import DefaultHeader from "../../../components/DefaultHeader";
-import FooterPadrao from "../../../components/StandardFooter";
+import StandardFooter from "../../../components/StandardFooter";
 import SideFilter from "../../../components/SideFilter";
 import InputGeneric from "../../../components/Inputs/InputGeneric";
 import InputDate from "../../../components/Inputs/InputDate";
@@ -13,7 +13,6 @@ import {Main,
   ContainerFiltro, 
   ContainerResultado, 
   Article, 
-  BotaoCadastro, 
   AgrupamentoFiltro,
   ContainerFiltroData,
   RefreshIconeFiltro,
@@ -35,7 +34,7 @@ export default function PageFuncionariosHome(){
     const navigate = useNavigate();
 
     const fetchFuncionarios = async (filtros = {}) => {
-        let url = 'https://localhost:5000/api/Funcionario';
+        let url = 'http://localhost:5000/api/Funcionario';
         const temFiltro = Object.keys(filtros).length > 0;
     
         if (temFiltro) {
@@ -155,7 +154,9 @@ export default function PageFuncionariosHome(){
 
     return(
         <>
-        <DefaultHeader />
+        <DefaultHeader 
+          url = '/home'
+        />
         <Main>
             <Article>
                 <ContainerFiltro>
@@ -233,7 +234,7 @@ export default function PageFuncionariosHome(){
 
             </SideFilter>
         )}
-        <FooterPadrao />
+        <StandardFooter />
         </>
     )
 }

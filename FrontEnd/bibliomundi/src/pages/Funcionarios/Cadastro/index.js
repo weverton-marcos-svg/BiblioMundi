@@ -113,25 +113,15 @@ const CadastroFuncionario = () => {
     }
   }
 
-   useEffect(() => {
-      fetchCargos(); // Carrega todos os funcionários inicialmente
-    }, []);
-
-  function formatDateForInput(datetimeString) {
-    if (!datetimeString) {
-      return ''; // Retorna uma string vazia se a data for nula ou indefinida
-    }
-    const date = new Date(datetimeString);
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Adiciona 1 ao mês e formata com zero à esquerda
-    const day = date.getDate().toString().padStart(2, '0'); // Formata o dia com zero à esquerda
-    return `${year}-${month}-${day}`;
-  }
-
+  useEffect(() => {
+    fetchCargos(); // Carrega todos os funcionários inicialmente
+  }, []);
 
   return (
     <>
-      <DefaultHeader />
+      <DefaultHeader 
+        url = '/funcionarios'
+      />
       <Main>
         <Article>
           <h2>{isEditing ? 'Editar Funcionário' : 'Cadastrar Funcionário'}</h2>
@@ -179,7 +169,7 @@ const CadastroFuncionario = () => {
                 id="dataAdmissao"
                 name="dataAdmissao"
                 titulo="Data de Admissão:"
-                value={formatDateForInput(funcionario.dataAdmissao)}
+                value={funcionario.dataAdmissao}
                 onChange={handleChange}
                 required={true}
               />

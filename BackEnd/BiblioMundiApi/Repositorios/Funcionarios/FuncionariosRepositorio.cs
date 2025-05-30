@@ -67,7 +67,6 @@ namespace BiblioMundiApi.Repositorios.Funcionarios
 
             return listagem;
         }
-
         public async Task<FuncionariosLocalizarPorIdComandoSaida> LocalizarPorId (int Id)
         {
             if(Id <= 0)
@@ -117,7 +116,6 @@ namespace BiblioMundiApi.Repositorios.Funcionarios
             return funcionario;
 
         }
-
         public async Task<FuncionariosEntidade> LocalizarEntidadePorId(int id)
         {
             var funcionario  = await _conexaoSql.Funcionarios.FirstOrDefaultAsync(x => x.Id == id);

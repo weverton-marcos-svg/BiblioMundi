@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import { FaCalendarAlt } from 'react-icons/fa'; 
-
 
 export const Form = styled.form`
   display: flex;
@@ -102,40 +100,4 @@ export const Select = styled.select`
 export const ContainerButao = styled.div`
   display:flex;
   justify-content: space-between;
-`;
-
-export const InputFieldDate = styled.input`
-  padding: 0.7rem;
-  padding-right: 2.5rem; /* Espaço para o seu ícone */
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 1rem;
-  width: 100%;
-  box-sizing: border-box;
-  &::-webkit-calendar-picker-indicator {
-    background: transparent;
-    bottom: 0;
-    color: transparent;
-    cursor: pointer;
-    height: auto;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: auto;
-  }
-`;
-
-export const CalendarIcon = styled(FaCalendarAlt)`
-  position: absolute;
-  top: 50%;
-  right: 0.7rem;
-  transform: translateY(-50%);
-  color: #aaa;
-  cursor: pointer; /* Indica que o ícone é clicável */
-`;
-
-export const InputContainerData = styled.div`
-  position: relative;
-  width: 100%;
 `;

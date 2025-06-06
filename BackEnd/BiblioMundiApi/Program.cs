@@ -2,13 +2,14 @@ using BiblioMundiApi.Comando.Padrao.Validacao;
 using BiblioMundiApi.Conexao;
 using BiblioMundiApi.Data.Conexao;
 using BiblioMundiApi.Interfaces.Repositorio;
+using BiblioMundiApi.Repositorios.Autores;
 using BiblioMundiApi.Repositorios.Cargos;
 using BiblioMundiApi.Repositorios.Clientes;
 using BiblioMundiApi.Repositorios.Funcionarios;
+using BiblioMundiApi.Repositorios.Generos;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,7 +20,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddValidatorsFromAssemblyContaining<PadraoComandoEntradaValidacao>();
+builder.Services.AddValidatorsFromAssemblyContaining<PadraoCadastroComandoEntradaValidador>();
 builder.Services.AddFluentValidationAutoValidation();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -56,6 +57,8 @@ builder.Services.AddScoped(c => new ConexaoBd(builder.Configuration.GetConnectio
 builder.Services.AddScoped<ICargosRepositorio,CargosRepositorio>();
 builder.Services.AddScoped<IFuncionariosRepositorio,FuncionariosRepositorio>();
 builder.Services.AddScoped<IClientesRepositorio, ClientesRepositorio>();
+builder.Services.AddScoped<IGenerosRepositorio, GenerosRepositorio>();
+builder.Services.AddScoped<IAutoresRepositorio, AutoresRepositorio>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -66,6 +69,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseAuthorization();
 app.UseCors("PermitirQualquerOrigem");

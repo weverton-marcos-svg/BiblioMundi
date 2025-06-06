@@ -1,6 +1,7 @@
-﻿using BiblioMundiApi.Interfaces.Repositorio;
-using System.Threading.Tasks;
+﻿using BiblioMundiApi.Comando.Padrao;
+using BiblioMundiApi.Interfaces.Repositorio;
 using System;
+using System.Threading.Tasks;
 
 namespace BiblioMundiApi.Manipulador.Padrao
 {

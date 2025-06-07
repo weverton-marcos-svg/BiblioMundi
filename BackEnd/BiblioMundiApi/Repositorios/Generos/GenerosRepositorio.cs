@@ -3,6 +3,7 @@ using BiblioMundiApi.Conexao;
 using BiblioMundiApi.Entidade;
 using BiblioMundiApi.Interfaces.Repositorio;
 using BiblioMundiApi.Repositorios.Padrao;
+using BiblioMundiApi.TratamentoDeErro;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -65,6 +66,16 @@ namespace BiblioMundiApi.Repositorios.Generos
             }
 
             return await _conexaoSql.Generos.Where(x => x.Descricao  == descricao).FirstOrDefaultAsync();
+        }
+
+        public async Task<GenerosEntidade> LocalizarEntidadePorId(int Id) 
+        {
+            if (Id <= 0 )
+            {
+                throw new ErroExcecao("Id naõ informado.");
+            }
+
+            return await _conexaoSql.Generos.Where(x => x.Id == Id).FirstOrDefaultAsync();
         }
     }
 }

@@ -17,8 +17,8 @@ namespace BiblioMundiApi.Entidade
         public int QuantidadeDeCopias { get; set; }
         public int Autor { get; set; }
         public int Genero { get; set; }
-        public List<AutoresEntidade> autoes { get; set; }
-        public List<GenerosEntidade> generos { get; set; }
+        public AutoresEntidade AutoresEntidade { get; set; }
+        public GenerosEntidade GenerosEntidade { get; set; }
 
     }
 }

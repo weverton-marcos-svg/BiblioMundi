@@ -7,6 +7,7 @@ using BiblioMundiApi.Repositorios.Cargos;
 using BiblioMundiApi.Repositorios.Clientes;
 using BiblioMundiApi.Repositorios.Funcionarios;
 using BiblioMundiApi.Repositorios.Generos;
+using BiblioMundiApi.Repositorios.Livros;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
@@ -59,6 +60,7 @@ builder.Services.AddScoped<IFuncionariosRepositorio,FuncionariosRepositorio>();
 builder.Services.AddScoped<IClientesRepositorio, ClientesRepositorio>();
 builder.Services.AddScoped<IGenerosRepositorio, GenerosRepositorio>();
 builder.Services.AddScoped<IAutoresRepositorio, AutoresRepositorio>();
+builder.Services.AddScoped<ILivrosRepositorio, LivrosRepositorio>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

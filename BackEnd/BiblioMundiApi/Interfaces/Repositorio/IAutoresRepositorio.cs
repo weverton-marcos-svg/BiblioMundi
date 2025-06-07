@@ -10,5 +10,6 @@ namespace BiblioMundiApi.Interfaces.Repositorio
         Task<List<AutoresListarTodosComandoSaida>> ListarTodos(AutoresListarTodosComandoEntrada comando);
         Task<AutoresLocalizarPorIdComandoSaida> LocalizarPorId(int Id);
         Task<AutoresEntidade> LocalizarPorNome(string nome);
+        Task<AutoresEntidade> LocalizarEntidadePorId(int Id);
     }
 }

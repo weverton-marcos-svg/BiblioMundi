@@ -84,5 +84,15 @@ namespace BiblioMundiApi.Repositorios.Autores
 
             return await _conexaoSql.Autores.Where(x => x.Nome == nome).FirstOrDefaultAsync();
         }
+
+        public async Task<AutoresEntidade> LocalizarEntidadePorId(int Id)
+        {
+            if (Id <= 0)
+            {
+                throw new ErroExcecao("Id não informado");
+            }
+
+            return await _conexaoSql.Autores.Where(x => x.Id == Id).FirstOrDefaultAsync();
+        }
     }
 }

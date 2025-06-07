@@ -2,12 +2,13 @@
 {
     public enum TipoFormatoEnum
     {
-        Livros  = 0,
-        EBooks  = 1,
-        Manga   = 2,
-        Graphic_Novels = 3,
-        Novelas_leves = 4,
-        Revistas = 5,
-        Livro_Academico = 6
+        Nenhum  = 0,
+        Livros  = 1,
+        EBooks  = 2,
+        Manga   = 3,
+        Graphic_Novels = 4,
+        Novelas_leves = 5,
+        Revistas = 6,
+        Livro_Academico = 7
     }
 }

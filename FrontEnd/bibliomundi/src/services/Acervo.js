@@ -1,4 +1,5 @@
 import api from 'axios';
+import qs from 'qs'; // Importe a biblioteca qs
 import showErrorToast from '../components/Toast/ToastErro';
 
 const urlBase = process.env.REACT_APP_API_URL;
@@ -126,7 +127,11 @@ export default class AcervoService {
 
     // #region Livros
     async getLivros(filtros) {
-        const response = await acervoApi.get('/livros', { params: filtros })
+        const response = await acervoApi.get('/livros', {params: filtros, paramsSerializer: {
+                        serialize: (params) => {
+                        return qs.stringify(params, { arrayFormat: 'repeat', encode: false });
+                    },
+                },})
         .catch(function(error) {
             showErrorToast('Erro ao consultar livros ' + error.response.statusText);
             console.error('Erro ao consultar livros:', error);

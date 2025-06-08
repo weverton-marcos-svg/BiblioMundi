@@ -134,6 +134,18 @@ export default function PageGenerosHome() {
                 </article>
             </Main>
 
+            {filtroVisivel && (
+                <SideFilter onClose={() => setFiltroVisivel(false)} onApplyFilters={handleApplyFilters} onClearFilters={handleClearFilters}>
+                    <InputGeneric 
+                        htmlFor={"Descricao"}
+                        titulo={"Descrição: "}
+                        type={"text"}
+                        value={descricaoFiltro}
+                        onChange={(e) => setDescricaoFiltro(e.target.value)}
+                        required={false}
+                    />
+                </SideFilter>
+            )}
             <StandardFooter />
         </>
     )

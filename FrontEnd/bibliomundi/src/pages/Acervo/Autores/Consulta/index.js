@@ -32,8 +32,8 @@ export default function PageAutoresHome() {
     const [autorIdInativar, setAutorIdInativar] = useState(null);
     const [nomeFiltro, setNomeFiltro] = useState('');
     const [nacionalidadeFiltro, setNacionalidadeFiltro] = useState('');
-    const [DataNascimentoInicial, setDataNascimentoInicial] = useState('');
-    const [DataNascimentoFinal, setDataNascimentoFinal] = useState('');
+    const [dataNascimentoInicial, setDataNascimentoInicial] = useState('');
+    const [dataNascimentoFinal, setDataNascimentoFinal] = useState('');
 
     const autoresService = new AutoresService();
     const navigate = useNavigate();
@@ -80,12 +80,12 @@ export default function PageAutoresHome() {
             filtros.nacionalidade = nacionalidadeFiltro; // Adiciona o filtro de nacionalidade se houver valor
         };
 
-        if (DataNascimentoInicial) {
-            filtros.dataNascimentoInicial = DataNascimentoInicial; // Adiciona o filtro de data de nascimento inicial se houver valor  
+        if (dataNascimentoInicial) {
+            filtros.dataNascimentoInicial = dataNascimentoInicial; // Adiciona o filtro de data de nascimento inicial se houver valor  
         }
 
-        if (DataNascimentoFinal) {
-            filtros.dataNascimentoFinal = DataNascimentoFinal; // Adiciona o filtro de data de nascimento final se houver valor
+        if (dataNascimentoFinal) {
+            filtros.dataNascimentoFinal = dataNascimentoFinal; // Adiciona o filtro de data de nascimento final se houver valor
         }
 
         fetchAutores(filtros); 
@@ -160,8 +160,46 @@ export default function PageAutoresHome() {
                     </ContainerResultado>
                 </article>
             </Main>
-            
 
+            {filtroVisivel && ( 
+                 <SideFilter onClose={() => setFiltroVisivel(false)} onApplyFilters={handleApplyFilters} onClearFilters={handleClearFilters}>
+                    <ContainerFiltroData>
+                        <InputDate
+                            htmlFor={"dataNascimentoInicial"}
+                            titulo={"Nascimento de:"}
+                            type={"date"}
+                            value={dataNascimentoInicial}
+                            onChange={(e) => setDataNascimentoInicial(e.target.value)}
+                        />
+
+                        <InputDate
+                            htmlFor={"dataNascimentoFinal"}
+                            titulo={"Nascimento até:"}
+                            type={"date"}
+                            value={dataNascimentoFinal}
+                            onChange={(e) => setDataNascimentoFinal(e.target.value)}
+                        />
+                    </ContainerFiltroData>
+
+                    <InputGeneric 
+                        htmlFor={"BuscarNome"}
+                        titulo={"Nome:"}
+                        type={"text"}
+                        value={nomeFiltro}
+                        onChange={(e) => setNomeFiltro(e.target.value)}
+                        required={false}
+                    />
+
+                    <InputGeneric 
+                        htmlFor={"BuscarNacionalidade"}
+                        titulo={"Nacionalidade:"}
+                        type={"text"}
+                        value={nacionalidadeFiltro}
+                        onChange={(e) => setNacionalidadeFiltro(e.target.value)}
+                        required={false}
+                    />
+                 </SideFilter>
+            )}
             <StandardFooter />
         </>
     )

@@ -43,6 +43,30 @@ export const ContainerFiltroData = styled.div`
   margin-top: 10px; 
 `;
 
+
+export const Label = styled.label`
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+`;
+
+export const Select = styled.select`
+  height: auto; /* Ajusta a altura automaticamente */
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px
+  font-size: 1em;
+  color: #555;
+  width: 100%; /* Ocupa a largura total */
+
+  &:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+  }
+`;
+
+
 const estilizarIconeFiltro = (IconeBase) => styled(IconeBase)`
     display: flex;
     height: 80%;

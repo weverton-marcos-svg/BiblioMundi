@@ -78,6 +78,7 @@ namespace BiblioMundiApi.Repositorios.Livros
                         Isbn = x.Isbn,
                         AnoPublicado = x.AnoPublicado,
                         QuantidadeDeCopias = x.QuantidadeDeCopias,
+                        Inativo = x.Inativo,
                         Autor = new()
                         {
                             Id = x.AutoresEntidade.Id,

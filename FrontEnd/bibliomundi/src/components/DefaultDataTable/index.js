@@ -5,6 +5,10 @@ const getStyledTr = (isInativo) => {
   return isInativo ? StyledTrInativo : StyledTr;
 };
 
+const getNestedValue = (obj, path) => {
+  return path.split('.').reduce((acc, part) => acc && acc[part], obj);
+}
+
 export default function DefaultDataTable ({ data, headerColumns, actionButtons }) {
 return (
     <StyledTable>
@@ -27,7 +31,11 @@ return (
             <RowComponent key={rowIndex}>
               {headerColumns.map((column, colIndex) => (
                 <StyledTd key={colIndex} largura={column.largura}>
-                  {typeof column.render === 'function' ? column.render(row) : row[column.key]}
+                  {typeof column.render === 'function' 
+                      ? column.render(row) 
+                      : column.path 
+                        ? getNestedValue(row, column.path)
+                        : row[column.key]}
                 </StyledTd>
               ))}
               {actionButtons && (

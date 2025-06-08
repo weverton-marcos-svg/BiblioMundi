@@ -11,6 +11,7 @@ namespace BiblioMundiApi.Comando.Livros
         public string Isbn { get; set; }
         public int AnoPublicado { get; set; }
         public int QuantidadeDeCopias { get; set; }
+        public bool Inativo { get; set; }
         public PadraoComandoSaida Autor { get; set; }
         public PadraoComandoSaida Genero { get; set; }
     }

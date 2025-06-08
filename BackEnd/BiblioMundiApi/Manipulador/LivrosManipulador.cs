@@ -70,7 +70,13 @@ namespace BiblioMundiApi.Manipulador
         #region Metodos Privados
         public async Task Validacao(LivroCadastroPadraoComandoEntrada parametros, int Id)
         {
-            
+            var registro = await _livrosRepositorio.LocalizarEntidadeIsbn(parametros.Isbn);
+
+            if (registro is not null && registro.Id != Id)
+            {
+                throw new ErroExcecao($"O livro {registro.Titulo} já foi cadastrado com o ISBN: {registro.Isbn}");
+            }
+
             if (parametros.AnoPublicao > DateTime.Now.Year)
             {
                 throw new ErroExcecao("Ano de publicação não pode ser superior ao ano atual");

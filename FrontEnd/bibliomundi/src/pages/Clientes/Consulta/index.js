@@ -10,6 +10,7 @@ import ConfirmationModal from "../../../components/Modal/ConfirmationModal";
 import StandardButton from "../../../components/StandardButton";
 import { LuPencil,LuEyeOff  } from "react-icons/lu";
 import ClientesService from "../../../services/clientes";
+import { ToastContainer } from 'react-toastify';
 import {RefreshIconeFiltro,
     FilterIconeFiltro,
     FilterDollarIconeFiltro,
@@ -19,7 +20,6 @@ import {RefreshIconeFiltro,
     AgrupamentoFiltro,
     ContainerFiltroData
 } from "./styled";
-
 
 export default function PageClientesHome(){
 
@@ -33,14 +33,14 @@ export default function PageClientesHome(){
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [clienteIdParaInativar, setClienteIdParaInativar] = useState(null);
     const [mensagemModal, setMensagemModal] = useState('');
-    
+ 
     const clientesService = new ClientesService();
     const navigate = useNavigate();
-    const urlBase = process.env.REACT_APP_API_URL + '/Clientes';
 
     const fetchClientes = async (filtros = {}) => {
-        try {
-            const data = await clientesService.getClientes(filtros);
+        const data = await clientesService.getClientes(filtros);
+
+        if (data) {
             const listagemCliente = data.map(clienteAPI => ({
                 id: clienteAPI.id || 0,
                 nome: clienteAPI.nome || '',
@@ -52,29 +52,26 @@ export default function PageClientesHome(){
                 bloquearEmprestimo: clienteAPI.bloquearEmprestimo || false,
             }));
             setClientes(listagemCliente);
-            console.log(data)
-        } catch (error) {
-            console.error('Error fetching clientes:', error);
         }
     };
 
     const handleConfirmarInativacao = async () => {
         setIsModalVisible(false);
         if (clienteIdParaInativar) {
-          try {
+        //   try {
             const response = await clientesService.putStatsLogico(clienteIdParaInativar);
             if (response.status === 200) {
                 fetchClientes();
             } else {
                 alert('Erro ao inativar/ativar um cliente.');
             }
-          } 
-          catch (error) {
-            console.error('Erro ao inativar/ativar um cliente.', error);
-          } 
-          finally {
-            setClienteIdParaInativar(null); 
-          }
+        //   } 
+        //   catch (error) {
+        //     console.error('Erro ao inativar/ativar um cliente.', error);
+        //   } 
+        //   finally {
+        //     setClienteIdParaInativar(null); 
+        //   }
         }
     };
 
@@ -157,6 +154,7 @@ export default function PageClientesHome(){
 
     return(
         <>
+            <ToastContainer/>
             <DefaultHeader
                 url = '/home'
             />
@@ -165,11 +163,13 @@ export default function PageClientesHome(){
                     <ContainerFiltro>
                         <AgrupamentoFiltro>
                             <RefreshIconeFiltro onClick={() => fetchClientes()} />
+
                             {filtroVisivel 
                                 ? <FilterDollarIconeFiltro onClick={() => setFiltroVisivel(false)} />
                                 : <FilterIconeFiltro onClick={() => setFiltroVisivel(true)} />
                         }
                         </AgrupamentoFiltro>
+                        
                         <StandardButton
                             texto={"Cadastar novo cliente"}
                             redirecionarUrl={"/clientes/cadastro"}

@@ -39,7 +39,9 @@ export const ListaOpcao = styled.ul`
     box-sizing: border-box;
     padding: 0px;
 `;
+
 export const Opcao = styled.li`
+    position: relative;
     height:fit-content;
     list-style-type: none;
     font-size:1rem;
@@ -107,4 +109,32 @@ export const Main = styled.main`
     width:100%;
     align-items: center;
     justify-content: center;
+`;
+
+// Example for a new styled component for the sub-menu
+export const SubMenu = styled.ul`
+  position: absolute;
+  top: 100%; 
+  width: 180%;
+  background-color: white; 
+  border: 1px solid #ccc;
+  list-style: none;
+  padding: 5px 10px;
+  margin: 1px 0;
+  z-index: 2;
+  min-width: 150px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); 
+`;
+
+export const SubMenuItem = styled.li`
+  padding: 6px 0px;
+  cursor: pointer;
+  font-weight: 400;
+  &:hover {
+    background-color: #f1f1f1;
+    border-radius: 25px;
+    font-weight: 700;
+  }
 `;

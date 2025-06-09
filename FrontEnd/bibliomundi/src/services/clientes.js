@@ -1,5 +1,5 @@
 import api from 'axios';
-
+import showErrorToast from '../components/Toast/ToastErro';
 const urlBase = process.env.REACT_APP_API_URL; 
 
 const clientesApi = api.create({
@@ -9,14 +9,14 @@ const clientesApi = api.create({
 export default class ClientesService {
 
     async getClientes(filtros) {
-        try {
-        const response = await clientesApi.get('',{params: filtros});
+        const response = await clientesApi.get('',{params: filtros})
+        .catch(function(error) {
+            showErrorToast('Erro ao consultar clientes');
+            console.error('Erro ao consultar clientes:', error);
+            return[];
+        });
+        
         return response.data;
-        }
-        catch (error) {
-            console.error('Error ao consultar clientes:', error);
-            throw error;
-        }
     }
 
     async getClientesById(id) {
@@ -25,6 +25,7 @@ export default class ClientesService {
             return response.data;
         }
         catch (error) {
+            showErrorToast('Erro ao consultar cliente de id: ' + id);
             console.error('Error ao consultar cliente:', error);
             throw error;
         }
